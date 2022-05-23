@@ -49,6 +49,16 @@ async function run() {
           res.send(result);
         })
 
+        // user product 
+        app.get('/userProduct/:email', async(req, res) =>{
+          const email = req.params.email;
+          const  query = {userEmail: email};
+          const cursor = productCollection.find(query);
+          const products = await cursor.toArray();
+          res.send(products);
+          console.log(email);
+        })
+
   } finally {
   }
 }
