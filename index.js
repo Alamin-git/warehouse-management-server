@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 require("dotenv").config();
@@ -81,6 +82,17 @@ async function run() {
       );
       res.send(result);
     });
+
+    // JWT
+    app.post('/getToken', async(req,res) =>{
+      const user = req.body;
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '1d'
+      });
+      res.send(accessToken);
+    })
+
+
   } finally {
   }
 }
